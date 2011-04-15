@@ -53,7 +53,7 @@ class AZMessage():
         if match:
             self.causer = match.group(1)
         
-        self.title = re.sub('(\n+)', '. ', xmpp_msg['body'])
+        self.title = re.sub('([\n\r]+)', '. ', xmpp_msg['body'])
         self.pubdate = datetime.utcnow()
         self.id = xmpp_msg['id']
         self.categories = []
