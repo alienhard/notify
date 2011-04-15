@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python notifier.py -v -d >run.log 2>&1 &
