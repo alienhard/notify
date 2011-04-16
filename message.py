@@ -26,12 +26,12 @@ import api
 # Regexes 
 PROJECT_STORY_RE = 'https://agilezen.com/project/(\d*)/story/(\d*)'
 ALT_PROJECT_STORY_RE = '\[(\w*)\].*\(\#(\d*)\)'
-
 NEW_STORY_RE = '\) was created by '
 MARKED_BLOCKED_RE = '\) was blocked by '
 MARKED_DEPLOYED_RE = '\) was moved from .*? to Deployed'
 MOVED_TO_READY_RE = 'was moved from .*? to Ready'
 CAUSER_RE = '\sby\s([A-Z]\w+\s[A-Z]\w+)'
+
 
 class AZMessage():
     
@@ -69,22 +69,22 @@ class AZMessage():
         """
         match = re.search(PROJECT_STORY_RE, source)
         if match:
-            self.project = int(match.group(1))
-            self.story = int(match.group(2))
+            self.project_id = int(match.group(1))
+            self.story_id = int(match.group(2))
         else:
             match = re.search(ALT_PROJECT_STORY_RE, source, flags=re.DOTALL)
             if match:
-                self.project = api.lookup_project_id(match.group(1))
-                self.story = int(match.group(2))
+                self.project_id = api.lookup_project_id(match.group(1))
+                self.story_id = int(match.group(2))
             else:
                 raise MessageCreationException(
                     'Could not parse project/story number from: ' + source)
         self.link = 'https://agilezen.com' \
-            + '/project/' + str(self.project) \
-            + '/story/' + str(self.story)
+            + '/project/' + str(self.project_id) \
+            + '/story/' + str(self.story_id)
           
     def _fetch_additional_data(self):
-        dict = api.get_projects_stories(self.project, self.story)
+        dict = api.get_story(self.project_id, self.story_id)
         self.content = self._create_html_content_from(dict)
         self.content_plain = self._create_plain_content_from(dict)
         try:
@@ -92,7 +92,8 @@ class AZMessage():
             self.creator = dict['creator']['name']
             self.creator_mail = dict['creator']['email']
         except KeyError:
-            raise MessageCreationException('Failed to read status or creator from API.')
+            raise MessageCreationException(
+                'Failed to read status or creator from API.')
 
     def _create_html_content_from(self, dict):
         html = StringIO.StringIO()    
@@ -158,7 +159,6 @@ class AZMessage():
     def _convert_gmt(self, string):
         try:
             utc = datetime.strptime(string, "%Y-%m-%dT%H:%M:%S")
-            
         except ValueError:
             return 'n/a'
         local = time.localtime(time.mktime(utc.timetuple()) - time.altzone)

@@ -1,0 +1,202 @@
+(lp0
+(imessage
+AZMessage
+p1
+(dp2
+S'status'
+p3
+Vstarted
+p4
+sS'content_plain'
+p5
+Vhttps://agilezen.com/project/18765/story/12\u000a\u000aBug X\u000a\u000a---------------------------\u000a\u000aPhase: Backlog\u000aStatus: started\u000aCreator: Adrian Lienhard\u000a\u000a---------------------------\u000a\u000aAdrian Lienhard said (14.03.2011 16:56):\u000aA comment\u000aOn another line\u000a\u000aAdrian Lienhard said (01.04.2011 13:46):\u000aComment X\u000a\u000aAdrian Lienhard said (01.04.2011 13:56):\u000aComment Y\u000a\u000aAdrian Lienhard said (01.04.2011 14:36):\u000aComment Z\u000a\u000a
+p6
+sS'pubdate'
+p7
+cdatetime
+datetime
+p8
+(S'\x07\xdb\x04\x10\x12\t\x0f\x0b\xe2\xc7'
+p9
+tp10
+Rp11
+sS'creator'
+p12
+VAdrian Lienhard
+p13
+sS'story_id'
+p14
+I12
+sS'title'
+p15
+S'"Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
+p16
+sS'creator_mail'
+p17
+Va.lienhard@netstyle.ch
+p18
+sS'content'
+p19
+V<html><body><a href="https://agilezen.com/project/18765/story/12">Story details</a><br /><b><p>Bug X</p>\u000a</b><hr />Phase: Backlog<br />Status: started<br />Creator: Adrian Lienhard<br /><hr /><br /> <i>Adrian Lienhard</i> said (14.03.2011 16:56):<p><p>A comment<br />On another line</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 13:46):<p><p>Comment X</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 13:56):<p><p>Comment Y</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 14:36):<p><p>Comment Z</p>\u000a</p><br /></body></html>
+p20
+sS'link'
+p21
+S'https://agilezen.com/project/18765/story/12'
+p22
+sS'project_id'
+p23
+I18765
+sS'id'
+p24
+S'ID_2'
+p25
+sS'categories'
+p26
+(lp27
+sS'causer'
+p28
+VJohn Doe
+p29
+sba(imessage
+AZMessage
+p30
+(dp31
+g3
+Vstarted
+p32
+sg5
+Vhttps://agilezen.com/project/18765/story/17\u000a\u000aTest 002 with umlaut ä\u000a\u000aAdded a detail\u000a\u000a---------------------------\u000a\u000aPhase: Ready\u000aStatus: started\u000aCreator: Adrian Lienhard\u000aOwner: Adrian Lienhard\u000a\u000a---------------------------\u000a\u000aAdrian Lienhard said (15.03.2011 12:21):\u000aAdd a comment\u000a\u000aAdrian Lienhard said (15.03.2011 12:21):\u000aAnother comment\u000a\u000aAdrian Lienhard said (15.03.2011 15:34):\u000aYet another comment\u000a\u000aAdrian Lienhard said (15.03.2011 15:35):\u000aComment --1\u000a\u000aAdrian Lienhard said (15.03.2011 15:43):\u000aComment --2\u000a\u000aAdrian Lienhard said (15.03.2011 15:46):\u000aComment -3\u000a\u000aAdrian Lienhard said (30.03.2011 12:20):\u000aA new comment.\u000a\u000aAdrian Lienhard said (30.03.2011 12:21):\u000aAnother comment\u000a\u000aWith a new line\u000a\u000a\u000aAnd some more\u000aAnd some **bold** text\u000a\u000aAdrian Lienhard said (30.03.2011 12:29):\u000aA\u000aB\u000a\u000aC\u000a\u000aAdrian Lienhard said (30.03.2011 12:31):\u000aX\u000a\u000aY\u000aZ\u000a\u000aAdrian Lienhard said (01.04.2011 17:37):\u000asdqwidq pwodj qwd\u000a  \u000a    self foo\u000a    self bar\u000a\u000aInline `1+3 = 4` code\u000a\u000a
+p33
+sg7
+g8
+(S'\x07\xdb\x04\x10\x12\t\r\x02*\x02'
+p34
+tp35
+Rp36
+sg12
+VAdrian Lienhard
+p37
+sg14
+I17
+sg15
+S'[TestProject] "New **Story**;. Code: `<i>003</i>`" (#18) was created by John Doe \xc3\x84'
+p38
+sg17
+Va.lienhard@netstyle.ch
+p39
+sg19
+V<html><body><a href="https://agilezen.com/project/18765/story/17">Story details</a><br /><b><p>Test 002 with umlaut ä</p>\u000a</b><p>Added a detail</p>\u000a<hr />Phase: Ready<br />Status: started<br />Creator: Adrian Lienhard<br />Owner: Adrian Lienhard<br /><hr /><br /> <i>Adrian Lienhard</i> said (15.03.2011 12:21):<p><p>Add a comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 12:21):<p><p>Another comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:34):<p><p>Yet another comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:35):<p><p>Comment --1</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:43):<p><p>Comment --2</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:46):<p><p>Comment -3</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:20):<p><p>A new comment.</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:21):<p><p>Another comment<br /><br />With a new line<br /><br /><br />And some more<br />And some <strong>bold</strong> text</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:29):<p><p>A<br />B<br /><br />C</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:31):<p><p>X<br /><br />Y<br />Z</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 17:37):<p><p>sdqwidq pwodj qwd<br />  <br />    self foo<br />    self bar<br /><br />Inline <code>1+3 = 4</code> code</p>\u000a</p><br /></body></html>
+p40
+sg21
+S'https://agilezen.com/project/18765/story/17'
+p41
+sg23
+I18765
+sg24
+S'ID_1'
+p42
+sg26
+(lp43
+sg28
+VJohn Doe
+p44
+sba(imessage
+AZMessage
+p45
+(dp46
+S'status'
+p47
+Vstarted
+p48
+sS'content_plain'
+p49
+Vhttps://agilezen.com/project/18765/story/12\u000a\u000aBug X\u000a\u000a---------------------------\u000a\u000aPhase: Backlog\u000aStatus: started\u000aCreator: Adrian Lienhard\u000a\u000a---------------------------\u000a\u000aAdrian Lienhard said (14.03.2011 16:56):\u000aA comment\u000aOn another line\u000a\u000aAdrian Lienhard said (01.04.2011 13:46):\u000aComment X\u000a\u000aAdrian Lienhard said (01.04.2011 13:56):\u000aComment Y\u000a\u000aAdrian Lienhard said (01.04.2011 14:36):\u000aComment Z\u000a\u000a
+p50
+sS'pubdate'
+p51
+g8
+(S'\x07\xdb\x04\x10\x11+6\x00\xf2\xf9'
+p52
+tp53
+Rp54
+sS'title'
+p55
+S'"Printportal: Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
+p56
+sS'story_id'
+p57
+I12
+sS'creator'
+p58
+VAdrian Lienhard
+p59
+sS'creator_mail'
+p60
+Va.lienhard@netstyle.ch
+p61
+sS'content'
+p62
+V<html><body><a href="https://agilezen.com/project/18765/story/12">Story details</a><br /><b><p>Bug X</p>\u000a</b><hr />Phase: Backlog<br />Status: started<br />Creator: Adrian Lienhard<br /><hr /><br /> <i>Adrian Lienhard</i> said (14.03.2011 16:56):<p><p>A comment<br />On another line</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 13:46):<p><p>Comment X</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 13:56):<p><p>Comment Y</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 14:36):<p><p>Comment Z</p>\u000a</p><br /></body></html>
+p63
+sS'link'
+p64
+S'https://agilezen.com/project/18765/story/12'
+p65
+sS'project_id'
+p66
+I18765
+sS'id'
+p67
+S'ID_2'
+p68
+sS'categories'
+p69
+(lp70
+sS'causer'
+p71
+VJohn Doe
+p72
+sba(imessage
+AZMessage
+p73
+(dp74
+g47
+Vstarted
+p75
+sg49
+Vhttps://agilezen.com/project/18765/story/17\u000a\u000aTest 002 with umlaut ä\u000a\u000aAdded a detail\u000a\u000a---------------------------\u000a\u000aPhase: Ready\u000aStatus: started\u000aCreator: Adrian Lienhard\u000aOwner: Adrian Lienhard\u000a\u000a---------------------------\u000a\u000aAdrian Lienhard said (15.03.2011 12:21):\u000aAdd a comment\u000a\u000aAdrian Lienhard said (15.03.2011 12:21):\u000aAnother comment\u000a\u000aAdrian Lienhard said (15.03.2011 15:34):\u000aYet another comment\u000a\u000aAdrian Lienhard said (15.03.2011 15:35):\u000aComment --1\u000a\u000aAdrian Lienhard said (15.03.2011 15:43):\u000aComment --2\u000a\u000aAdrian Lienhard said (15.03.2011 15:46):\u000aComment -3\u000a\u000aAdrian Lienhard said (30.03.2011 12:20):\u000aA new comment.\u000a\u000aAdrian Lienhard said (30.03.2011 12:21):\u000aAnother comment\u000a\u000aWith a new line\u000a\u000a\u000aAnd some more\u000aAnd some **bold** text\u000a\u000aAdrian Lienhard said (30.03.2011 12:29):\u000aA\u000aB\u000a\u000aC\u000a\u000aAdrian Lienhard said (30.03.2011 12:31):\u000aX\u000a\u000aY\u000aZ\u000a\u000aAdrian Lienhard said (01.04.2011 17:37):\u000asdqwidq pwodj qwd\u000a  \u000a    self foo\u000a    self bar\u000a\u000aInline `1+3 = 4` code\u000a\u000a
+p76
+sg51
+g8
+(S'\x07\xdb\x04\x10\x11+3\x03\xe6\xe6'
+p77
+tp78
+Rp79
+sg55
+S'[TestProject] "New **Story**;. Code: `<i>003</i>`" (#18) was created by John Doe \xc3\x84'
+p80
+sg57
+I17
+sg58
+VAdrian Lienhard
+p81
+sg60
+Va.lienhard@netstyle.ch
+p82
+sg62
+V<html><body><a href="https://agilezen.com/project/18765/story/17">Story details</a><br /><b><p>Test 002 with umlaut ä</p>\u000a</b><p>Added a detail</p>\u000a<hr />Phase: Ready<br />Status: started<br />Creator: Adrian Lienhard<br />Owner: Adrian Lienhard<br /><hr /><br /> <i>Adrian Lienhard</i> said (15.03.2011 12:21):<p><p>Add a comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 12:21):<p><p>Another comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:34):<p><p>Yet another comment</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:35):<p><p>Comment --1</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:43):<p><p>Comment --2</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (15.03.2011 15:46):<p><p>Comment -3</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:20):<p><p>A new comment.</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:21):<p><p>Another comment<br /><br />With a new line<br /><br /><br />And some more<br />And some <strong>bold</strong> text</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:29):<p><p>A<br />B<br /><br />C</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (30.03.2011 12:31):<p><p>X<br /><br />Y<br />Z</p>\u000a</p><br /> <i>Adrian Lienhard</i> said (01.04.2011 17:37):<p><p>sdqwidq pwodj qwd<br />  <br />    self foo<br />    self bar<br /><br />Inline <code>1+3 = 4</code> code</p>\u000a</p><br /></body></html>
+p83
+sg64
+S'https://agilezen.com/project/18765/story/17'
+p84
+sg66
+I18765
+sg67
+S'ID_1'
+p85
+sg69
+(lp86
+sg71
+VJohn Doe
+p87
+sba.

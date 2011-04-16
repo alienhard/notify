@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title>AgileZen #18765</title><link href="http://rss.netstyle.ch/project-18765" rel="alternate"></link><id>http://rss.netstyle.ch/project-18765</id><updated>2011-04-16T18:09:15Z</updated><entry><title>"Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar</title><link href="https://agilezen.com/project/18765/story/12" rel="alternate"></link><updated>2011-04-16T18:09:15Z</updated><author><name>John Doe</name><email>notify@netstyle.ch</email></author><id>https://agilezen.com/project/18765/story/12#ID_2</id><summary type="html">&lt;html&gt;&lt;body&gt;&lt;a href="https://agilezen.com/project/18765/story/12"&gt;Story details&lt;/a&gt;&lt;br /&gt;&lt;b&gt;&lt;p&gt;Bug X&lt;/p&gt;
+&lt;/b&gt;&lt;hr /&gt;Phase: Backlog&lt;br /&gt;Status: started&lt;br /&gt;Creator: Adrian Lienhard&lt;br /&gt;&lt;hr /&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (14.03.2011 16:56):&lt;p&gt;&lt;p&gt;A comment&lt;br /&gt;On another line&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 13:46):&lt;p&gt;&lt;p&gt;Comment X&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 13:56):&lt;p&gt;&lt;p&gt;Comment Y&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 14:36):&lt;p&gt;&lt;p&gt;Comment Z&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;</summary></entry><entry><title>[TestProject] "New **Story**;. Code: `&lt;i&gt;003&lt;/i&gt;`" (#18) was created by John Doe Ä</title><link href="https://agilezen.com/project/18765/story/17" rel="alternate"></link><updated>2011-04-16T18:09:13Z</updated><author><name>John Doe</name><email>notify@netstyle.ch</email></author><id>https://agilezen.com/project/18765/story/17#ID_1</id><summary type="html">&lt;html&gt;&lt;body&gt;&lt;a href="https://agilezen.com/project/18765/story/17"&gt;Story details&lt;/a&gt;&lt;br /&gt;&lt;b&gt;&lt;p&gt;Test 002 with umlaut ä&lt;/p&gt;
+&lt;/b&gt;&lt;p&gt;Added a detail&lt;/p&gt;
+&lt;hr /&gt;Phase: Ready&lt;br /&gt;Status: started&lt;br /&gt;Creator: Adrian Lienhard&lt;br /&gt;Owner: Adrian Lienhard&lt;br /&gt;&lt;hr /&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 12:21):&lt;p&gt;&lt;p&gt;Add a comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 12:21):&lt;p&gt;&lt;p&gt;Another comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:34):&lt;p&gt;&lt;p&gt;Yet another comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:35):&lt;p&gt;&lt;p&gt;Comment --1&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:43):&lt;p&gt;&lt;p&gt;Comment --2&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:46):&lt;p&gt;&lt;p&gt;Comment -3&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:20):&lt;p&gt;&lt;p&gt;A new comment.&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:21):&lt;p&gt;&lt;p&gt;Another comment&lt;br /&gt;&lt;br /&gt;With a new line&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;And some more&lt;br /&gt;And some &lt;strong&gt;bold&lt;/strong&gt; text&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:29):&lt;p&gt;&lt;p&gt;A&lt;br /&gt;B&lt;br /&gt;&lt;br /&gt;C&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:31):&lt;p&gt;&lt;p&gt;X&lt;br /&gt;&lt;br /&gt;Y&lt;br /&gt;Z&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 17:37):&lt;p&gt;&lt;p&gt;sdqwidq pwodj qwd&lt;br /&gt;  &lt;br /&gt;    self foo&lt;br /&gt;    self bar&lt;br /&gt;&lt;br /&gt;Inline &lt;code&gt;1+3 = 4&lt;/code&gt; code&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;</summary></entry><entry><title>"Printportal: Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar</title><link href="https://agilezen.com/project/18765/story/12" rel="alternate"></link><updated>2011-04-16T17:43:54Z</updated><author><name>John Doe</name><email>notify@netstyle.ch</email></author><id>https://agilezen.com/project/18765/story/12#ID_2</id><summary type="html">&lt;html&gt;&lt;body&gt;&lt;a href="https://agilezen.com/project/18765/story/12"&gt;Story details&lt;/a&gt;&lt;br /&gt;&lt;b&gt;&lt;p&gt;Bug X&lt;/p&gt;
+&lt;/b&gt;&lt;hr /&gt;Phase: Backlog&lt;br /&gt;Status: started&lt;br /&gt;Creator: Adrian Lienhard&lt;br /&gt;&lt;hr /&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (14.03.2011 16:56):&lt;p&gt;&lt;p&gt;A comment&lt;br /&gt;On another line&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 13:46):&lt;p&gt;&lt;p&gt;Comment X&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 13:56):&lt;p&gt;&lt;p&gt;Comment Y&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 14:36):&lt;p&gt;&lt;p&gt;Comment Z&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;</summary></entry><entry><title>[TestProject] "New **Story**;. Code: `&lt;i&gt;003&lt;/i&gt;`" (#18) was created by John Doe Ä</title><link href="https://agilezen.com/project/18765/story/17" rel="alternate"></link><updated>2011-04-16T17:43:51Z</updated><author><name>John Doe</name><email>notify@netstyle.ch</email></author><id>https://agilezen.com/project/18765/story/17#ID_1</id><summary type="html">&lt;html&gt;&lt;body&gt;&lt;a href="https://agilezen.com/project/18765/story/17"&gt;Story details&lt;/a&gt;&lt;br /&gt;&lt;b&gt;&lt;p&gt;Test 002 with umlaut ä&lt;/p&gt;
+&lt;/b&gt;&lt;p&gt;Added a detail&lt;/p&gt;
+&lt;hr /&gt;Phase: Ready&lt;br /&gt;Status: started&lt;br /&gt;Creator: Adrian Lienhard&lt;br /&gt;Owner: Adrian Lienhard&lt;br /&gt;&lt;hr /&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 12:21):&lt;p&gt;&lt;p&gt;Add a comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 12:21):&lt;p&gt;&lt;p&gt;Another comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:34):&lt;p&gt;&lt;p&gt;Yet another comment&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:35):&lt;p&gt;&lt;p&gt;Comment --1&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:43):&lt;p&gt;&lt;p&gt;Comment --2&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (15.03.2011 15:46):&lt;p&gt;&lt;p&gt;Comment -3&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:20):&lt;p&gt;&lt;p&gt;A new comment.&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:21):&lt;p&gt;&lt;p&gt;Another comment&lt;br /&gt;&lt;br /&gt;With a new line&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;And some more&lt;br /&gt;And some &lt;strong&gt;bold&lt;/strong&gt; text&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:29):&lt;p&gt;&lt;p&gt;A&lt;br /&gt;B&lt;br /&gt;&lt;br /&gt;C&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (30.03.2011 12:31):&lt;p&gt;&lt;p&gt;X&lt;br /&gt;&lt;br /&gt;Y&lt;br /&gt;Z&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt; &lt;i&gt;Adrian Lienhard&lt;/i&gt; said (01.04.2011 17:37):&lt;p&gt;&lt;p&gt;sdqwidq pwodj qwd&lt;br /&gt;  &lt;br /&gt;    self foo&lt;br /&gt;    self bar&lt;br /&gt;&lt;br /&gt;Inline &lt;code&gt;1+3 = 4&lt;/code&gt; code&lt;/p&gt;
+&lt;/p&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;</summary></entry></feed>

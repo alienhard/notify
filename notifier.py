@@ -19,11 +19,8 @@ from sleekxmpp.stanza import Message
 from sleekxmpp.stanza.htmlim import HTMLIM
 from sleekxmpp.xmlstream import ET, register_stanza_plugin
 
-from handlers.debug.handler import PrintHandler
-from handlers.feed.handler import FeedHandler
-from handlers.mail.handler import MailHandler
 from message import AZMessage, MessageCreationException
-from rules import *
+from rules import create_handlers
 import api
 
 # Python versions before 3.0 do not use UTF-8 encoding
@@ -71,7 +68,7 @@ def _send_test_messages(listener):
     
     msg = sleekxmpp.Message()
     msg['id'] = 'ID_2'
-    msg['body'] = '"Printportal: Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
+    msg['body'] = '"Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
     msg['subject'] = 'Test Subject comment'
     msg['type'] = 'chat'
     msg['from'] = 'notifications@jabber.agilezen.com/Jabber.Net'
@@ -94,23 +91,8 @@ if __name__ == '__main__':
                     help='enable simulation', action="store_const", const=True)
     opts, args = optp.parse_args()
     
-    # Setup logging.
+    # Setup logging
     logging.basicConfig(level=opts.loglevel, format='%(levelname)-8s %(message)s')
-    
-    # Setup handlers with rules defining which messages they should respond to
-    handlers = [
-        MailHandler(is_moved_to_ready, active_members_without_creator),
-        MailHandler(is_marked_blocked, everyone),
-        MailHandler(is_marked_deployed, active_members_with_creator),
-        FeedHandler(u'AgileZen: all', 'all', lambda msg: True) ]
-    def create_feedhandler(id):
-        return FeedHandler(u'AgileZen #' + str(id),
-            'project-' + str(id),
-            lambda msg: msg.project == id)
-    for id in api.get_active_project_ids():
-        handlers.append(create_feedhandler(id))
-    if (opts.loglevel == logging.DEBUG):
-        handlers.append(PrintHandler())        
     
     # Register plugins and create xmpp listener
     register_stanza_plugin(Message, HTMLIM)
@@ -118,9 +100,9 @@ if __name__ == '__main__':
     config.read('notify.cfg')
     jid = config.get('xmpp', 'jid')
     password = config.get('xmpp', 'password')
-    xmpp = XmppListener(jid, password, handlers)
+    debugging = opts.loglevel == logging.DEBUG
+    xmpp = XmppListener(jid, password, create_handlers(debugging))
     
-    # Simulation vs. normal mode
     if opts.simulation:
         print '\n\nEntering simulation. Sending fake messages...\n\n'
         _send_test_messages(xmpp)
