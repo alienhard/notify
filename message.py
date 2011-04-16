@@ -57,7 +57,7 @@ class AZMessage():
         self.pubdate = datetime.utcnow()
         self.id = xmpp_msg['id']
         self.categories = []
-     
+
     def _initialize_urls_from(self, source):
         """Try to extract and set the project and story IDs.
         

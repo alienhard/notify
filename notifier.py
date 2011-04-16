@@ -54,28 +54,20 @@ class XmppListener(sleekxmpp.ClientXMPP):
             for handler in self.handlers:
                 handler.handle(az_message)
 
+def _start_xmpp_listener(debugging=False):
+    """Register plugins and create xmpp listener."""
+    register_stanza_plugin(Message, HTMLIM)
+    config = ConfigParser.RawConfigParser()
+    config.read('notify.cfg')
+    jid = config.get('xmpp', 'jid')
+    password = config.get('xmpp', 'password')
+    xmpp = XmppListener(jid, password, create_handlers(debugging))
+    if xmpp.connect(('talk.google.com', 5222)):
+        xmpp.process(threaded=False)
+        print("Done")
+    else:
+        print("Unable to connect.")
 
-# useful for debugging        
-def _send_test_messages(listener):
-    msg = sleekxmpp.Message()
-    msg['id'] = 'ID_1'
-    msg['body'] = '[TestProject] "New **Story**;\n\nCode: `<i>003</i>`" (#18) was created by John Doe Ä'
-    msg['subject'] = 'Test Subject umlaut Ä'
-    msg['type'] = 'chat'
-    msg['from'] = 'notifications@jabber.agilezen.com/Jabber.Net'
-    msg['html'].set_body('<html xmlns="http://jabber.org/protocol/xhtml-im"><body xmlns="http://www.w3.org/1999/xhtml">[<a href="https://agilezen.com/project/18765">TestProject</a>] <em>&quot;New Story with umlaut Ä&quot;</em> (<a href="https://agilezen.com/project/18765/story/17">#17</a>) was moved from <strong>Done</strong> to <strong>Tested</strong> by John Doe</body></html>')
-    listener.message(msg)
-    
-    msg = sleekxmpp.Message()
-    msg['id'] = 'ID_2'
-    msg['body'] = '"Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
-    msg['subject'] = 'Test Subject comment'
-    msg['type'] = 'chat'
-    msg['from'] = 'notifications@jabber.agilezen.com/Jabber.Net'
-    msg['html'].set_body('<html xmlns="http://jabber.org/protocol/xhtml-im"><body xmlns="http://www.w3.org/1999/xhtml">Comment by John Doe on [Sandbox] "Bug X" (#12): Comment Y</body></html>')
-    listener.message(msg)
-
-    
 if __name__ == '__main__':
     optp = OptionParser()
     optp.add_option('-q', '--quiet', help='set logging to ERROR',
@@ -87,29 +79,8 @@ if __name__ == '__main__':
     optp.add_option('-v', '--verbose', help='set logging to COMM',
                     action='store_const', dest='loglevel',
                     const=5, default=logging.INFO)
-    optp.add_option('-s', '--simulation', dest="simulation",
-                    help='enable simulation', action="store_const", const=True)
     opts, args = optp.parse_args()
-    
-    # Setup logging
-    logging.basicConfig(level=opts.loglevel, format='%(levelname)-8s %(message)s')
-    
-    # Register plugins and create xmpp listener
-    register_stanza_plugin(Message, HTMLIM)
-    config = ConfigParser.RawConfigParser()
-    config.read('notify.cfg')
-    jid = config.get('xmpp', 'jid')
-    password = config.get('xmpp', 'password')
+    logging.basicConfig(level=opts.loglevel,
+        format='%(levelname)-8s %(message)s')
     debugging = opts.loglevel == logging.DEBUG
-    xmpp = XmppListener(jid, password, create_handlers(debugging))
-    
-    if opts.simulation:
-        print '\n\nEntering simulation. Sending fake messages...\n\n'
-        _send_test_messages(xmpp)
-    else:
-        if xmpp.connect(('talk.google.com', 5222)):
-            xmpp.process(threaded=False)
-            print("Done")
-        else:
-            print("Unable to connect.")
-            
+    _start_xmpp_listener(debugging)
