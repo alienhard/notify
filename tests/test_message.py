@@ -6,7 +6,7 @@ import json
 
 import sleekxmpp
 
-from .. import message
+import message
 
 
 class TestMessage(unittest.TestCase):
