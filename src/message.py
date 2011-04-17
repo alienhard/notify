@@ -19,7 +19,7 @@ from markdown2 import markdown
 
 import api
 
-# Regexes 
+# Regular expression strings to parse out data from the XMPP message 
 PROJECT_STORY_RE = 'https://agilezen.com/project/(\d*)/story/(\d*)'
 ALT_PROJECT_STORY_RE = '\[(\w*)\].*\(\#(\d*)\)'
 NEW_STORY_RE = '\) was created by '
@@ -63,7 +63,6 @@ class AZMessage():
         if match:
             self.causer = match.group(1)
         self._load_additional_data()
-
 
     def _load_project_and_story(self, source):
         """Try to extract and set the project and story IDs.

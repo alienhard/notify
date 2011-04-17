@@ -3,25 +3,24 @@
 It caches a certain number of recent messages to persist them over restarts.
 """
 
-import sys
-import re
 import os
 import pickle
-import ConfigParser
+from ConfigParser import RawConfigParser
 
 from feedgenerator import Atom1Feed
 
 # read config
-config = ConfigParser.RawConfigParser()
-config.read(os.path.join(
-    os.path.dirname(__file__), '..', '..', '..', 'notify.cfg'))
-FEED_BASE_URL = config.get('feed', 'base_url')
-FEED_DESCRIPTION = config.get('feed', 'description')
-AUTHOR_NAME = config.get('feed', 'author_name')
-AUTHOR_EMAIL = config.get('feed', 'author_email')
-MESSAGE_CACHE_SIZE = config.getint('feed', 'message_cache_size')
+CFG_PATH = os.path.join(
+    os.path.dirname(__file__), '..', '..', '..', 'notify.cfg')
+CONFIG = RawConfigParser()
+CONFIG.read(CFG_PATH)
+FEED_BASE_URL = CONFIG.get('feed', 'base_url')
+FEED_DESCRIPTION = CONFIG.get('feed', 'description')
+AUTHOR_NAME = CONFIG.get('feed', 'author_name')
+AUTHOR_EMAIL = CONFIG.get('feed', 'author_email')
+MESSAGE_CACHE_SIZE = CONFIG.getint('feed', 'message_cache_size')
 
-FEED_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..' 'feeds')
+FEED_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'feeds')
 
 
 class FeedHandler():

@@ -2,11 +2,6 @@
 Modify the method create_handlers() to implement custom behavior.
 """
 
-import sys
-import time
-import re
-import httplib
-
 from handlers.debug.handler import PrintHandler
 from handlers.feed.handler import FeedHandler
 from handlers.mail.handler import MailHandler
@@ -20,12 +15,13 @@ def create_handlers(debugging=False):
         MailHandler(is_marked_blocked, everyone),
         MailHandler(is_marked_deployed, active_members_with_creator),
         FeedHandler(u'AgileZen: all', 'all', lambda msg: True) ]
-    def create_feedhandler(id):
-        return FeedHandler(u'AgileZen #' + str(id),
-            'project-' + str(id),
-            lambda msg: msg.project_id == id)
-    for id in api.get_active_project_ids():
-        handlers.append(create_feedhandler(id))
+    def _create_feedhandler(project_id):
+        """Bind project_id in the predicate below."""
+        return FeedHandler(u'AgileZen #' + str(project_id),
+            'project-' + str(project_id),
+            lambda msg: msg.project_id == project_id)
+    for project_id in api.get_active_project_ids():
+        handlers.append(_create_feedhandler(project_id))
     if debugging:
         handlers.append(PrintHandler())      
     return handlers
@@ -51,7 +47,7 @@ def everyone(msg):
     """Return a list of all mail addresses of all involved people.
     """
     dicts = api.get_people(msg.project_id)
-    return set(map(lambda member: member['email'], dicts))
+    return set([member['email'] for member in dicts])
 
 def active_members_with_creator(msg):
     """Return a set of mail addresses of all active members and the
@@ -69,7 +65,7 @@ def active_members(msg):
     """Return a list of all mail addresses of people having the role Members.
     """
     dicts = api.get_people(msg.project_id, 'Members')
-    return set(map(lambda member: member['email'], dicts))
+    return set([member['email'] for member in dicts])
 
 def creators(msg):
     """Return a set with the creator's mail address."""
