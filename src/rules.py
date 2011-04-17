@@ -13,7 +13,7 @@ from handlers.mail.handler import MailHandler
 import api
 
 
-def create_handlers(debugging):
+def create_handlers(debugging=False):
     """Return a list of handlers."""
     handlers = [
         MailHandler(is_moved_to_ready, active_members_without_creator),

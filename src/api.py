@@ -7,10 +7,11 @@ import httplib
 import json
 import StringIO
 import ConfigParser
+import os
 
 # AgileZen-related constants, read API key from cfg.
 config = ConfigParser.RawConfigParser()
-config.read('notify.cfg')
+config.read(os.path.join(os.path.dirname(__file__), '..', 'notify.cfg'))
 API_KEY = config.get('api', 'key')
 API_DOMAIN = 'agilezen.com'
 API_PATH_PREFIX = '/api/v1'

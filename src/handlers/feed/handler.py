@@ -13,13 +13,15 @@ from feedgenerator import Atom1Feed
 
 # read config
 config = ConfigParser.RawConfigParser()
-config.read('notify.cfg')
+config.read(os.path.join(
+    os.path.dirname(__file__), '..', '..', '..', 'notify.cfg'))
 FEED_BASE_URL = config.get('feed', 'base_url')
 FEED_DESCRIPTION = config.get('feed', 'description')
-FEED_PATH = config.get('feed', 'path')
 AUTHOR_NAME = config.get('feed', 'author_name')
 AUTHOR_EMAIL = config.get('feed', 'author_email')
 MESSAGE_CACHE_SIZE = config.getint('feed', 'message_cache_size')
+
+FEED_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..' 'feeds')
 
 
 class FeedHandler():
@@ -85,7 +87,8 @@ class FeedHandler():
             self.messages = []
 
     def _backup_pickle_path(self):
-        return os.path.abspath(FEED_PATH + self.filename + '.pkl')
+        return os.path.abspath(os.path.join(
+            FEED_PATH, self.filename + '.pkl'))
 
 
 class FeedGenerator():

@@ -10,20 +10,25 @@ import message
 
 
 class TestMessage(unittest.TestCase):
-    """Test creation of AZMessage instances. Uses mocks for API."""
+    """Test AZMessage. Uses mocks for API."""
 
     def setUp(self):
-        self.xmpp_msg = _xmpp_msg_1()
+        self.xmpp_msg_1 = _xmpp_msg_1()
         self.story_1 = json.loads(STORY_1_JSON)
         message.api.get_story = Mock(return_value=self.story_1)
+        message.api.lookup_project_id = Mock(return_value=99999)
         
-    def test_data_from_xmpp_message(self):
-        msg = message.AZMessage(self.xmpp_msg)
+        self.xmpp_msg_2 = _xmpp_msg_2()
+        self.story_2 = json.loads(STORY_2_JSON)
+        message.api.get_story = Mock(return_value=self.story_2)
+        message.api.lookup_project_id = Mock(return_value=99999)
+
+    def test_msg_1_data_from_xmpp_message(self):
+        msg = message.AZMessage(self.xmpp_msg_1)
         message.api.get_story.assert_called_with(12345, 1)
         
         self.assertEqual(msg.project_id, 12345)
         self.assertEqual(msg.story_id, 1)
-        self.assertEqual(msg.causer, 'John Doe')
         
         # note, new lines are replaced by a dot and space  
         self.assertEqual(msg.title,
@@ -34,9 +39,10 @@ class TestMessage(unittest.TestCase):
         self.assertEqual(msg.id, 'ID_1')
         self.assertEqual(msg.link,
             'https://agilezen.com/project/12345/story/1')
+        self.assertEqual(msg.causer, 'John Doe')
     
-    def test_data_from_api(self):
-        msg = message.AZMessage(self.xmpp_msg)
+    def test_msg_1_data_from_api(self):
+        msg = message.AZMessage(self.xmpp_msg_1)
         message.api.get_story.assert_called_with(12345, 1)
         self.assertEqual(msg.status, 'started')
         self.assertEqual(msg.creator, 'Gob Bluth')
@@ -44,6 +50,30 @@ class TestMessage(unittest.TestCase):
         self.assertTrue(msg.content is not None)
         self.assertTrue(msg.content_plain is not None)
 
+    def test_msg_2_lookup_project(self):
+        msg = message.AZMessage(self.xmpp_msg_2)
+        message.api.lookup_project_id.assert_called_with('ProjectFoo')
+        self.assertEqual(msg.project_id, 99999)
+        self.assertEqual(msg.story_id, 2)
+        self.assertTrue(msg.pubdate is not None)
+        self.assertEqual(msg.id, 'ID_2')
+        self.assertEqual(msg.link,
+            'https://agilezen.com/project/99999/story/2')
+        self.assertEqual(msg.causer, 'Bob Doe')
+        
+    def test_new_and_ready_to_work(self):
+        msg = message.AZMessage(self.xmpp_msg_1)
+        self.assertTrue(msg.is_new())
+        self.assertTrue(msg.is_moved_to_ready())
+        self.assertFalse(msg.is_marked_blocked())
+        self.assertFalse(msg.is_marked_deployed())
+
+    def test_ready_to_work_from_backlog(self):
+        msg = message.AZMessage(self.xmpp_msg_2)
+        self.assertFalse(msg.is_new())
+        self.assertTrue(msg.is_moved_to_ready())
+        self.assertFalse(msg.is_marked_blocked())
+        self.assertFalse(msg.is_marked_deployed())
 
 def _xmpp_msg_1():
     msg = sleekxmpp.Message()
@@ -57,19 +87,67 @@ def _xmpp_msg_1():
 
 
 def _xmpp_msg_2():
+    """This message is special in that it doesn't include an URL from
+    which the project ID can be parsed. In this case, the ID is looked
+    up through the API.
+    """
     msg = sleekxmpp.Message()
     msg['id'] = 'ID_2'
-    msg['body'] = '"Add Feature X" (#20) was moved from Backlog to Ready by Foo Bar'
+    msg['body'] = '"Add Feature X" (#2) was moved from Backlog to Ready by Foo Bar'
     msg['subject'] = 'Test Subject comment'
     msg['type'] = 'chat'
     msg['from'] = 'notifications@jabber.agilezen.com/Jabber.Net'
-    msg['html'].set_body('<html xmlns="http://jabber.org/protocol/xhtml-im"><body xmlns="http://www.w3.org/1999/xhtml">Comment by John Doe on [Sandbox] "Bug X" (#12): Comment Y</body></html>')
+    msg['html'].set_body('<html xmlns="http://jabber.org/protocol/xhtml-im"><body xmlns="http://www.w3.org/1999/xhtml">Comment by Bob Doe on [ProjectFoo] "Bug X" (#2): Comment Y</body></html>')
     return msg
     
 
-# Example JSON data from http://dev.agilezen.com/resources/stories.html 
+# JSON from dev.agilezen.com/resources/stories.html (slightly adapted)
 STORY_1_JSON = '{\
   "id": 1,\
+  "text": "Build Spec house",\
+  "details": "Only have 2 weeks to build a spec house.",\
+  "size": "5",\
+  "color": "teal",\
+  "priority": "9",\
+  "deadline": "2011-02-24T00:00:00",\
+  "status": "started",\
+  "project": {\
+    "id": 12345,\
+    "name": "Sudden Valley"\
+  },\
+  "phase": {\
+    "id": 3,\
+    "name": "Working"\
+  },\
+  "creator": {\
+    "id": 1,\
+    "name": "Gob Bluth",\
+    "userName": "gob",\
+    "email": "Gob@bluth.com"\
+  },\
+  "owner": {\
+    "id": 1,\
+    "name": "Gob Bluth",\
+    "userName": "gob",\
+    "email": "Gob@bluth.com"\
+  },\
+  "comments": [\
+    {\
+      "id": 1,\
+      "text": "No way we can build it in 2 weeks.",\
+      "createTime": "2011-02-17T20:01:01",\
+      "author": {\
+        "id": 1,\
+        "name": "Gob Bluth",\
+        "userName": "gob",\
+        "email": "Gob@bluth.com"\
+      }\
+    }\
+  ]\
+}'
+
+STORY_2_JSON = '{\
+  "id": 2,\
   "text": "Build Spec house",\
   "details": "Only have 2 weeks to build a spec house.",\
   "size": "5",\

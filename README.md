@@ -40,7 +40,7 @@ Requires Python >= 2.6
 1. Clone this project
 2. Download and install [SleekXMPP](https://github.com/fritzy/SleekXMPP)
 3. Download and install [Feedgenerator](http://pypi.python.org/pypi/feedgenerator)
-4. Optional: set up a web server to serve the RSS feeds. They are written to the `feeds/` directory.
+4. Optional: set up a web server to serve the RSS feeds. They are written to the path specified in notify.cfg (e.g., `feeds/`).
 
 ## Setup
 
@@ -54,7 +54,7 @@ Requires Python >= 2.6
 
 ## Customization
 
-Check out the creation and of the handler instances and rules in `rules.py` and adapt them according to your team's needs.
+Check out the creation and of the handler instances and rules in `src/rules.py` and adapt them according to your team's needs.
 
 
 ## License 

@@ -4,13 +4,15 @@ import sys
 import re
 import smtplib
 import ConfigParser
+import os.path
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # load config
 config = ConfigParser.RawConfigParser()
-config.read('notify.cfg')
+config.read(os.path.join(
+    os.path.dirname(__file__), '..', '..', '..', 'notify.cfg'))    
 SENDER_MAIL = config.get('mail', 'sender')
 SMPT_SERVER = config.get('mail', 'smtp_server')
 
