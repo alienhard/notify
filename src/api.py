@@ -29,23 +29,24 @@ def get_projects():
     return _parseRresponse(response)
 
 def get_people(project_id, role = None):
-    """Return a list of members (dicts) that have the given role in the project.
-    If role is None, return all members."""
+    """Return a list of members (dictionaries) that have the given role
+    in the project. If role is None, return all members.
+    """
     path = API_PATH_PREFIX + '/projects/' + str(project_id) + '?with=roles'
     conn = httplib.HTTPSConnection(API_DOMAIN)
     conn.request("GET", path, headers=API_HEADERS)
     response = conn.getresponse().read()
-    dict = _parseRresponse(response)
+    data = _parseRresponse(response)
     if role is not None:
-        role_dict = _detect(lambda r: r['name'] == role, dict['roles'])
+        role_dict = _detect(lambda r: r['name'] == role, data['roles'])
         if (role_dict):
             return role_dict['members']
         else:
-            raise APIException('Failed to read members <' + role + '> from API.')
+            raise APIException('Failed to read members with role <'
+                + role + '> from API.')
     else:
         result = []
-        print dict
-        for each in dict['roles']:
+        for each in data['roles']:
             result += each['members']
         return result
 
@@ -61,15 +62,15 @@ def get_story(project_id, story_id):
 
 def get_active_project_ids():
     """Return a the IDs of all non-archived projects.""" 
-    dict = get_projects()
-    return map(lambda project: int(project['id']), dict['items'])
+    data = get_projects()
+    return map(lambda project: int(project['id']), data['items'])
     
 def lookup_project_id(name):
     """Return the project's ID with the given name.
     If not found raise exception.
     """
-    dict = get_projects()
-    for project in dict['items']:
+    data = get_projects()
+    for project in data['items']:
         if (project['name'] == name):
             return int(project['id'])
     raise APIException('Unknown project name ' + name)     
@@ -78,10 +79,9 @@ def _parseRresponse(response):
     if not response:
         raise APIException('Failed to read data from API.')
     try:
-        dict = json.loads(response)
+        return json.loads(response)
     except:
         raise APIException('Failed to parse data from API.')
-    return dict
 
 def _detect(f, seq):
     for item in seq:

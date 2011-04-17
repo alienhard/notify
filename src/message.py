@@ -9,13 +9,9 @@ This code further assumes, that active members of a project have a role
 named 'Members' (this is the default).
 """
 
-import sys
 import time
 import re
-import httplib
-import json
 import StringIO
-import ConfigParser
 from datetime import datetime
 
 from sleekxmpp.xmlstream.tostring import tostring
@@ -34,7 +30,10 @@ CAUSER_RE = '\sby\s([A-Z]\w+\s[A-Z]\w+)'
 
 
 class AZMessage():
-    
+    """Agilezen message with additional information obtained through the API.
+    Creates plain text and HTML representations of a message.
+    """
+
     @staticmethod
     def is_agilezen_xmpp_message(xmpp_msg):
         """Check whether xmpp message is of interesest.""" 
@@ -43,29 +42,35 @@ class AZMessage():
         return chat_message and from_agilezen
         
     def __init__(self, xmpp_msg):
-        body_element = xmpp_msg['html']['body']
-        source = tostring(body_element)
-        
-        self._initialize_urls_from(source)
-        self._fetch_additional_data()
-        
+        self.title = re.sub('([\n\r]+)', '. ', xmpp_msg['body'])
+        self.pubdate = datetime.utcnow()
+        self.project_id = None
+        self.story_id = None
+        self.categories = []
+        self.status = None
+        self.creator = None
+        self.creator_mail = None
+        self.content = None
+        self.content_plain = None
+
+        source = tostring(xmpp_msg['html']['body'])
+        self._load_project_and_story(source)
+        self.link = 'https://agilezen.com' \
+            + '/project/' + str(self.project_id) \
+            + '/story/' + str(self.story_id)
+        self.guid = self.link + '#' + xmpp_msg['id']
         match = re.search(CAUSER_RE, source)
         if match:
             self.causer = match.group(1)
-        
-        self.title = re.sub('([\n\r]+)', '. ', xmpp_msg['body'])
-        self.pubdate = datetime.utcnow()
-        self.id = xmpp_msg['id']
-        self.categories = []
+        self._load_additional_data()
 
-    def _initialize_urls_from(self, source):
+
+    def _load_project_and_story(self, source):
         """Try to extract and set the project and story IDs.
         
-        AgileZen comment messages do not have URLs...  :(
+        AgileZen messages for comments do not have URLs...  :(
         In this case, resort to parsing project name and looking up its ID
         via the API.
-        
-        Also note that, AgileZen's URLs for web and API access are inconsistent.
         """
         match = re.search(PROJECT_STORY_RE, source)
         if match:
@@ -79,46 +84,46 @@ class AZMessage():
             else:
                 raise MessageCreationException(
                     'Could not parse project/story number from: ' + source)
-        self.link = 'https://agilezen.com' \
-            + '/project/' + str(self.project_id) \
-            + '/story/' + str(self.story_id)
           
-    def _fetch_additional_data(self):
-        dict = api.get_story(self.project_id, self.story_id)
-        self.content = self._create_html_content_from(dict)
-        self.content_plain = self._create_plain_content_from(dict)
+    def _load_additional_data(self):
+        """Create html and text representations and load status,
+        creator, and creator_mail from the API."""
+        story = api.get_story(self.project_id, self.story_id)
+        self.content = self._create_html_content_from(story)
+        self.content_plain = self._create_plain_content_from(story)
         try:
-            self.status = dict['status']
-            self.creator = dict['creator']['name']
-            self.creator_mail = dict['creator']['email']
+            self.status = story['status']
+            self.creator = story['creator']['name']
+            self.creator_mail = story['creator']['email']
         except KeyError:
             raise MessageCreationException(
                 'Failed to read status or creator from API.')
 
-    def _create_html_content_from(self, dict):
+    def _create_html_content_from(self, story):
+        """Return an html representation of this story."""
         html = StringIO.StringIO()    
         html.write('<html><body>')
         html.write('<a href="' + self.link + '">Story details</a><br />')
-        html.write('<b>' + markdown(dict['text']) + '</b>')
-        if dict['details']:
-            html.write(markdown(dict['details']))
+        html.write('<b>' + markdown(story['text']) + '</b>')
+        if story['details']:
+            html.write(markdown(story['details']))
         html.write('<hr />')
-        html.write('Phase: ' + dict['phase']['name'] + '<br />')
-        html.write('Status: ' + dict['status'] + '<br />')
-        if 'blockedReason' in dict.keys():
+        html.write('Phase: ' + story['phase']['name'] + '<br />')
+        html.write('Status: ' + story['status'] + '<br />')
+        if 'blockedReason' in story.keys():
             html.write('<span style="color:red">Block reason: '
-                + dict['blockedReason'] + '</span><br />')
-        html.write('Creator: ' + dict['creator']['name'] + '<br />')
-        if 'owner' in dict.keys():
-            html.write('Owner: ' + dict['owner']['name'] + '<br />')
-        if 'deadline' in dict.keys():
+                + story['blockedReason'] + '</span><br />')
+        html.write('Creator: ' + story['creator']['name'] + '<br />')
+        if 'owner' in story.keys():
+            html.write('Owner: ' + story['owner']['name'] + '<br />')
+        if 'deadline' in story.keys():
             html.write('Deadline: '
-                + re.sub('T00:00:00', '', dict['deadline']) + '<br />')
-        if dict['comments']:
+                + re.sub('T00:00:00', '', story['deadline']) + '<br />')
+        if story['comments']:
             html.write('<hr /><br />')
-        for comment in dict['comments']:
+        for comment in story['comments']:
             html.write(' <i>' + comment['author']['name'] + '</i> said (')
-            html.write(self._convert_gmt(comment['createTime']) + '):')
+            html.write(_convert_gmt(comment['createTime']) + '):')
             comment = re.sub('(\n)', '<br />', comment['text'])
             html.write('<p>' + markdown(comment) + '</p>')
             html.write("<br />")        
@@ -127,45 +132,38 @@ class AZMessage():
         html.close()
         return content
     
-    def _create_plain_content_from(self, dict):
+    def _create_plain_content_from(self, story):
+        """Return a plain text representation of this story."""
         text = StringIO.StringIO()
         text.write(self.link + '\n\n')
-        text.write(dict['text'] + '\n\n')
-        if dict['details']:
-            text.write(dict['details'] + '\n\n')
+        text.write(story['text'] + '\n\n')
+        if story['details']:
+            text.write(story['details'] + '\n\n')
         text.write('---------------------------\n\n')
-        text.write('Phase: ' + dict['phase']['name'] + '\n')
-        text.write('Status: ' + dict['status'] + '\n')
-        if ('blockedReason' in dict.keys()):
+        text.write('Phase: ' + story['phase']['name'] + '\n')
+        text.write('Status: ' + story['status'] + '\n')
+        if 'blockedReason' in story.keys():
             text.write('* Block reason: '
-                + dict['blockedReason'] + '\n')
-        text.write('Creator: ' + dict['creator']['name'] + '\n')
-        if 'owner' in dict.keys():
-            text.write('Owner: ' + dict['owner']['name'] + '\n')
-        if 'deadline' in dict.keys():
+                + story['blockedReason'] + '\n')
+        text.write('Creator: ' + story['creator']['name'] + '\n')
+        if 'owner' in story.keys():
+            text.write('Owner: ' + story['owner']['name'] + '\n')
+        if 'deadline' in story.keys():
             text.write('Deadline: '
-                + re.sub('T00:00:00', '', dict['deadline']) + '\n')  
-        if dict['comments']:
+                + re.sub('T00:00:00', '', story['deadline']) + '\n')  
+        if story['comments']:
             text.write('\n---------------------------\n\n')
-        for comment in dict['comments']:
+        for comment in story['comments']:
             text.write(comment['author']['name'] + ' said (')
-            text.write(self._convert_gmt(comment['createTime']) + '):\n')
+            text.write(_convert_gmt(comment['createTime']) + '):\n')
             text.write(comment['text'])
             text.write("\n\n")
         content = text.getvalue()
         text.close()
         return content
         
-    def _convert_gmt(self, string):
-        try:
-            utc = datetime.strptime(string, "%Y-%m-%dT%H:%M:%S")
-        except ValueError:
-            return 'n/a'
-        local = time.localtime(time.mktime(utc.timetuple()) - time.altzone)
-        return time.strftime("%d.%m.%Y %H:%M", local)
-            
     def is_new(self):
-        """Returns true if the message was triggered when creating a new story.
+        """Returns true if the message was triggered when creating a story.
         """
         return re.search(NEW_STORY_RE, self.title) is not None
     
@@ -187,9 +185,22 @@ class AZMessage():
         return re.search(MARKED_DEPLOYED_RE, self.title) is not None
 
     def __str__(self):
-        return "<AZMessage '" + self.title + "' [" + self.id + "]>"
+        return "<AZMessage '" + self.title + "' [" + self.guid + "]>"
 
 
 class MessageCreationException(Exception):
+    """Exception raised when message instance cannot be created."""
     pass
+
+
+def _convert_gmt(string):
+    """Convert the argument, a timestamp in GMT, to a timestamp
+    string in the local time zone. Format as %d.%m.%Y %H:%M."""
+    try:
+        utc = datetime.strptime(string, "%Y-%m-%dT%H:%M:%S")
+    except ValueError:
+        return 'n/a'
+    local = time.localtime(time.mktime(utc.timetuple()) - time.altzone)
+    return time.strftime("%d.%m.%Y %H:%M", local)
+
         

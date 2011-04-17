@@ -56,6 +56,11 @@ Requires Python >= 2.6
 
 Check out the creation and of the handler instances and rules in `src/rules.py` and adapt them according to your team's needs.
 
+## Unit tests
+
+To run the unit tests you need the mock framework [Mock](http://pypi.python.org/pypi/mock).
+
+Run all tests with `nosetests` if you have [nose](http://packages.python.org/nose/) installed.
 
 ## License 
 

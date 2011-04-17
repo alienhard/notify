@@ -23,6 +23,15 @@ class TestMessage(unittest.TestCase):
         message.api.get_story = Mock(return_value=self.story_2)
         message.api.lookup_project_id = Mock(return_value=99999)
 
+    def test_is_agilezen_xmpp_message(self):
+        self.assertTrue(
+            message.AZMessage.is_agilezen_xmpp_message(self.xmpp_msg_1))
+        self.assertTrue(
+            message.AZMessage.is_agilezen_xmpp_message(self.xmpp_msg_2))
+        self.xmpp_msg_2['from'] = 'foo@gmail.com/CEFF15A8'
+        self.assertFalse(
+            message.AZMessage.is_agilezen_xmpp_message(self.xmpp_msg_2))
+        
     def test_msg_1_data_from_xmpp_message(self):
         msg = message.AZMessage(self.xmpp_msg_1)
         message.api.get_story.assert_called_with(12345, 1)
@@ -34,16 +43,18 @@ class TestMessage(unittest.TestCase):
         self.assertEqual(msg.title,
             '[TestProject] "New **Story**. Code: '\
             +'`<i>003</i>`" (#1) was created by John Doe')
-        
+            
         self.assertTrue(msg.pubdate is not None)
-        self.assertEqual(msg.id, 'ID_1')
+        self.assertEqual(msg.guid,
+            'https://agilezen.com/project/12345/story/1#ID_1')
         self.assertEqual(msg.link,
             'https://agilezen.com/project/12345/story/1')
         self.assertEqual(msg.causer, 'John Doe')
     
     def test_msg_1_data_from_api(self):
         msg = message.AZMessage(self.xmpp_msg_1)
-        message.api.get_story.assert_called_with(12345, 1)
+        message.api.get_story.assert_called_once_with(12345, 1)
+        self.assertFalse(message.api.lookup_project_id.called)
         self.assertEqual(msg.status, 'started')
         self.assertEqual(msg.creator, 'Gob Bluth')
         self.assertEqual(msg.creator_mail, 'Gob@bluth.com')
@@ -52,11 +63,13 @@ class TestMessage(unittest.TestCase):
 
     def test_msg_2_lookup_project(self):
         msg = message.AZMessage(self.xmpp_msg_2)
-        message.api.lookup_project_id.assert_called_with('ProjectFoo')
+        message.api.lookup_project_id.assert_called_once_with('ProjectFoo')
+        message.api.get_story.assert_called_once_with(99999, 2)
         self.assertEqual(msg.project_id, 99999)
         self.assertEqual(msg.story_id, 2)
         self.assertTrue(msg.pubdate is not None)
-        self.assertEqual(msg.id, 'ID_2')
+        self.assertEqual(msg.guid,
+            'https://agilezen.com/project/99999/story/2#ID_2')
         self.assertEqual(msg.link,
             'https://agilezen.com/project/99999/story/2')
         self.assertEqual(msg.causer, 'Bob Doe')
@@ -75,6 +88,12 @@ class TestMessage(unittest.TestCase):
         self.assertFalse(msg.is_marked_blocked())
         self.assertFalse(msg.is_marked_deployed())
 
+    def test_invalid_msg_data(self):
+        xmpp_msg = sleekxmpp.Message()
+        xmpp_msg['html'].set_body('<html><body><p>empty</p></body></html>')
+        self.assertRaises(message.MessageCreationException,
+            message.AZMessage, xmpp_msg)
+        
 def _xmpp_msg_1():
     msg = sleekxmpp.Message()
     msg['id'] = 'ID_1'

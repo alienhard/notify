@@ -50,11 +50,12 @@ class FeedHandler():
                 link = each.link,
                 description = each.content,
                 pubdate = each.pubdate,
-                unique_id = each.link + '#' + each.id,
+                unique_id = each.guid,
                 categories = each.categories,
                 author_name = author_name,
                 author_email = AUTHOR_EMAIL)
-        path = os.path.abspath(FEED_PATH + self.filename + '.xml')
+        path = os.path.abspath(
+            os.path.join(FEED_PATH, self.filename + '.xml'))
         file = open(path, 'w')
         generator.write_string_to_file(file)
         file.close()
