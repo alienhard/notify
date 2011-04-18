@@ -35,8 +35,10 @@ class MailHandler():
         msg = MIMEMultipart('alternative')
         msg['Subject'] = message.title
         msg['From'] = SENDER_MAIL
-        part1 = MIMEText(message.content_plain.encode('utf-8'), 'plain')
-        part2 = MIMEText(message.content.encode('utf-8'), 'html')
+        content = message.content_plain.encode('utf-8')
+        part1 = MIMEText(content, 'plain', 'utf-8')
+        content = message.content.encode('utf-8')
+        part2 = MIMEText(content, 'html', 'utf-8')
         msg.attach(part1)
         msg.attach(part2)
         smtp = smtplib.SMTP(SMPT_SERVER)

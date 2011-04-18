@@ -59,7 +59,7 @@ class AZMessage():
             + '/project/' + str(self.project_id) \
             + '/story/' + str(self.story_id)
         self.guid = self.link + '#' + xmpp_msg['id']
-        match = re.search(CAUSER_RE, source)
+        match = re.search(CAUSER_RE, source, re.UNICODE)
         if match:
             self.causer = match.group(1)
         self._load_additional_data()
