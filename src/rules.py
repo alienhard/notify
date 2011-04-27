@@ -5,6 +5,7 @@ Modify the method create_handlers() to implement custom behavior.
 from handlers.debug.handler import PrintHandler
 from handlers.feed.handler import FeedHandler
 from handlers.mail.handler import MailHandler
+from handlers.webhook.handler import WebhookHandler
 import api
 
 
@@ -14,9 +15,10 @@ def create_handlers(debugging=False):
         MailHandler(is_moved_to_ready, active_members_without_creator),
         MailHandler(is_marked_blocked, everyone),
         MailHandler(is_marked_deployed, active_members_with_creator),
-        FeedHandler(u'AgileZen: all', 'all', lambda msg: True) ]
+        FeedHandler(u'AgileZen: all', 'all', always),
+        WebhookHandler(is_new) ]
     def _create_feedhandler(project_id):
-        """Bind project_id in the predicate below."""
+        """Bind project_id within the predicate lambda below."""
         return FeedHandler(u'AgileZen #' + str(project_id),
             'project-' + str(project_id),
             lambda msg: msg.project_id == project_id)
@@ -25,7 +27,6 @@ def create_handlers(debugging=False):
     if debugging:
         handlers.append(PrintHandler())      
     return handlers
-
 
 def is_new(msg):
     """See comment in message.py"""
@@ -43,6 +44,10 @@ def is_moved_to_ready(msg):
     """See comment in message.py"""
     return msg.is_moved_to_ready()
 
+def always(msg):
+    """For handlers that should trigger in all cases."""
+    return True
+    
 def everyone(msg):
     """Return a list of all mail addresses of all involved people.
     """

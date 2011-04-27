@@ -47,7 +47,10 @@ class AZMessage():
         self.project_id = None
         self.story_id = None
         self.categories = []
+        self.text = None
+        self.tags = None
         self.status = None
+        self.color = None
         self.creator = None
         self.creator_mail = None
         self.content = None
@@ -91,7 +94,10 @@ class AZMessage():
         self.content = self._create_html_content_from(story)
         self.content_plain = self._create_plain_content_from(story)
         try:
+            self.text = story['text']
             self.status = story['status']
+            self.color = story['color']
+            self.tags = story['tags']
             self.creator = story['creator']['name']
             self.creator_mail = story['creator']['email']
         except KeyError:
@@ -107,6 +113,9 @@ class AZMessage():
         if story['details']:
             html.write(markdown(story['details']))
         html.write('<hr />')
+        if not story['color'] == 'grey':
+            html.write('Color: <span style="color:' + story['color'] + '">'
+                + story['color'] + '</span><br />')
         html.write('Phase: ' + story['phase']['name'] + '<br />')
         html.write('Status: ' + story['status'] + '<br />')
         if 'blockedReason' in story.keys():
@@ -139,6 +148,8 @@ class AZMessage():
         if story['details']:
             text.write(story['details'] + '\n\n')
         text.write('---------------------------\n\n')
+        if not story['color'] == 'grey':
+            text.write('Color: ' + story['color'] + '\n')
         text.write('Phase: ' + story['phase']['name'] + '\n')
         text.write('Status: ' + story['status'] + '\n')
         if 'blockedReason' in story.keys():

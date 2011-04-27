@@ -51,7 +51,7 @@ def get_story(project_id, story_id):
     """Return the details and comments of a story."""
     path = API_PATH_PREFIX
     path +='/projects/' + str(project_id) + '/stories/' + str(story_id)
-    path += '?with=details,comments'
+    path += '?with=details,comments,tags'
     conn = httplib.HTTPSConnection(API_DOMAIN)
     conn.request("GET", path, headers=API_HEADERS)
     response = conn.getresponse().read()
