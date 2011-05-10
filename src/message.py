@@ -100,9 +100,9 @@ class AZMessage():
             self.tags = story['tags']
             self.creator = story['creator']['name']
             self.creator_mail = story['creator']['email']
-        except KeyError:
+        except KeyError as err:
             raise MessageCreationException(
-                'Failed to read status or creator from API.')
+                'Failed to read data from API: ' + str(err))
 
     def _create_html_content_from(self, story):
         """Return an html representation of this story."""
