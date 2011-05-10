@@ -66,6 +66,10 @@ def _start_xmpp_listener():
     jid = config.get('xmpp', 'jid')
     password = config.get('xmpp', 'password')
     xmpp = XmppListener(jid, password, create_handlers())
+    xmpp.registerPlugin('xep_0030') # Service Discovery
+    xmpp.registerPlugin('xep_0004') # Data Forms
+    xmpp.registerPlugin('xep_0060') # PubSub
+    xmpp.registerPlugin('xep_0199') # XMPP Ping
     if xmpp.connect(('talk.google.com', 5222)):
         xmpp.process(threaded=False)
         print("Done")

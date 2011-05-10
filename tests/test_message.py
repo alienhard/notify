@@ -150,6 +150,12 @@ STORY_1_JSON = '{\
     "userName": "gob",\
     "email": "Gob@bluth.com"\
   },\
+  "tags": [\
+    {\
+      "id": 3,\
+      "name": "solid as a rock"\
+    }\
+  ],\
   "comments": [\
     {\
       "id": 1,\
@@ -194,6 +200,7 @@ STORY_2_JSON = '{\
     "userName": "gob",\
     "email": "Gob@bluth.com"\
   },\
+  "tags": [ ],\
   "comments": [\
     {\
       "id": 1,\
