@@ -2,9 +2,9 @@
 
 AgileZen Notify is a daemon that creates custom RSS feeds and sends mails for the [AgileZen project management service](http://agilezen.com/).
 
-AgileZen is a great tool, but currently it lacks good, customizable notification capabilities (when enabled, you get a mail *for each* single change...).
+AgileZen is a great tool, but currently it lacks customizable notification capabilities (when enabled, you get a mail *for each* single change...).
 
-AgileZen Notify allows your team to define who should get notified of what – either through mail or RSS feeds. Notify is implemented in Python. It listens to the XMPP stream of AgileZen and reads data from their REST API. Notify is designed to be customizable and extensible.
+AgileZen Notify allows your team to define who should get notified of what – either through mail or RSS feeds. You can also notify other applications through a webhook HTTP request. Notify is implemented in Python. It listens to the XMPP stream of AgileZen and reads data from their REST API. Notify is designed to be customizable and extensible.
 
 *(AgileZen is copyright Rally Software Development Corp.)*
 
@@ -15,6 +15,7 @@ Currently implemented are the following outputs:
 
 - Mail (both plain and rich text)
 - RSS feeds (atom format)
+- Webhooks (notifies other apps via HTTP)
 
 Through custom rules you can define wich feeds should be created and when to send mails to whom.
 
