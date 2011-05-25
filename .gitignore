@@ -1,3 +1,4 @@
 *.pyc
 deps
 run.log
+notify.cfg
