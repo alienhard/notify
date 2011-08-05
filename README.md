@@ -57,6 +57,20 @@ Requires Python >= 2.6
 
 Check out the creation and of the handler instances and rules in `src/rules.py` and adapt them according to your team's needs.
 
+The mail addresses of people are automatically pulled from the API and hence don't need to be configured.
+
+The rules allow for defining who gets mail notifications (not everyone with
+access to a project also needs toget informed about each single change). The
+notion of *active members* is to select only the people of a project that have the
+role *Members*.
+
+Here's an example of a role configuration in AgileZen (tab "Poeple"):
+- Role Administrator: just the person who administrates the project
+- Role Members: all team members that actively work on the project and want to get mails
+- Stakeholders: other involved people who don't need detailed notifications
+
+Like this one can easily define who gets mails by moving people between the roles Members and Stakeholders.
+
 ## Unit tests
 
 To run the unit tests you need the mock framework [Mock](http://pypi.python.org/pypi/mock).
